@@ -389,22 +389,18 @@
     </div>
 
     <script>
-        // Variáveis globais
         const api = "http://localhost:3000/ferramentas";
         
         let produtos = [];
         let estoqueData = {};
 
-        // Inicialização
         document.addEventListener('DOMContentLoaded', function() {
             carregarProdutos();
             configurarEventos();
             document.getElementById('data').value = new Date().toISOString().split('T')[0];
         });
 
-        // Configurar eventos
         function configurarEventos() {
-            // Tipo de movimentação
             document.querySelectorAll('.type-option').forEach(option => {
                 option.addEventListener('click', function() {
                     document.querySelectorAll('.type-option').forEach(opt => opt.classList.remove('selected'));
@@ -413,11 +409,9 @@
                 });
             });
 
-            // Formulário de movimentação
             document.getElementById('movementForm').addEventListener('submit', registrarMovimentacao);
         }
 
-        // Carregar produtos do backend
         async function carregarProdutos() {
             try {
                 const [ferramentasResponse, equipamentosResponse, vendasResponse] = await Promise.all([
@@ -434,7 +428,6 @@
                 const equipamentos = await equipamentosResponse.json();
                 const vendas = await vendasResponse.json();
 
-                // Processar produtos de acordo com os modelos Prisma
                 produtos = [
                     ...ferramentas.map(f => ({
                         ...f,
@@ -451,10 +444,8 @@
                     }))
                 ];
 
-                // Calcular estoque a partir das vendas
                 calcularEstoque(vendas);
 
-                // Ordenação alfabética usando Bubble Sort
                 ordenarProdutos();
                 atualizarSelectProdutos();
                 atualizarTabelaInventario();
@@ -465,9 +456,7 @@
             }
         }
 
-        // Calcular estoque a partir das vendas
         function calcularEstoque(vendas) {
-            // Inicializar estoque
             produtos.forEach(produto => {
                 estoqueData[produto.id] = {
                     estoque: 0,
@@ -475,7 +464,6 @@
                 };
             });
 
-            // Processar vendas para calcular estoque (saídas)
             vendas.forEach(venda => {
                 if (venda.id_ferramenta) {
                     estoqueData[venda.id_ferramenta].estoque -= venda.quantidade;
@@ -485,7 +473,6 @@
                 }
             });
 
-            // Adicionar estoque inicial (simulação - em produção viria do banco)
             produtos.forEach(produto => {
                 if (estoqueData[produto.id].estoque <= 0) {
                     estoqueData[produto.id].estoque = Math.floor(Math.random() * 50) + 10;
@@ -493,7 +480,6 @@
             });
         }
 
-        // Algoritmo de ordenação (Bubble Sort)
         function ordenarProdutos() {
             let n = produtos.length;
             for (let i = 0; i < n - 1; i++) {
@@ -508,7 +494,6 @@
             }
         }
 
-        // Atualizar select de produtos
         function atualizarSelectProdutos() {
             const select = document.getElementById('produto');
             select.innerHTML = '<option value="">Selecione um produto</option>';
@@ -525,7 +510,6 @@
             });
         }
 
-        // Atualizar tabela de inventário
         function atualizarTabelaInventario() {
             const tbody = document.getElementById('inventoryTableBody');
             tbody.innerHTML = '';
@@ -573,7 +557,6 @@
             });
         }
 
-        // Registrar movimentação
         async function registrarMovimentacao(e) {
             e.preventDefault();
 
@@ -592,14 +575,12 @@
 
             const estoqueInfo = estoqueData[produtoId];
 
-            // Verificar estoque para saída
             if (tipo === 'saida') {
                 if (estoqueInfo.estoque < quantidade) {
                     alert('Quantidade insuficiente em estoque!');
                     return;
                 }
 
-                // Verificar estoque mínimo
                 const novoEstoque = estoqueInfo.estoque - quantidade;
                 if (novoEstoque <= estoqueInfo.estoque_minimo) {
                     const confirmar = confirm(`⚠️ ATENÇÃO: Após esta movimentação, o estoque ficará abaixo do mínimo!\n\nEstoque atual: ${estoqueInfo.estoque}\nEstoque mínimo: ${estoqueInfo.estoque_minimo}\nEstoque após movimentação: ${novoEstoque}\n\nDeseja continuar?`);
@@ -610,7 +591,6 @@
             }
 
             try {
-                // Criar venda no backend
                 const vendaData = {
                     quantidade: tipo === 'entrada' ? quantidade : -quantidade,
                     data_venda: new Date(data).toISOString(),
