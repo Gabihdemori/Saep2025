@@ -50,4 +50,7 @@ A seguir segue a lista de requisitos funcionais do sistema:
     - [RF07.5] Listar todas as vendas realizadas
     - [RF07.6] Visualizar detalhes de venda específica
     - [RF07.7] Excluir registros de venda
+<<<<<<< HEAD
 
+=======
+>>>>>>> f59c443237bb4f674f35887eaba335594a4b2f2e
