@@ -1,14 +1,18 @@
 const api = "http://localhost:3000";
 const usuario = JSON.parse(localStorage.getItem("usuario")) || null;
 
-if (!usuario) {
-    window.location.href = "../login";
-}
 
-const titulo = document.querySelector("header h1");
-titulo.innerText = `Olá, ${usuario.nome}`;
 
-function sair() {
-    localStorage.removeItem("usuario");
-    window.location.href = "../login";
-}
+document.addEventListener('DOMContentLoaded', function() {
+            const usuario = JSON.parse(localStorage.getItem("usuario")) || { nome: "Usuário" };
+
+            document.getElementById('user-name').textContent = usuario.nome;
+            document.getElementById('user-avatar').textContent = usuario.nome.charAt(0).toUpperCase();
+        });
+
+        function sair() {
+            if (confirm('Tem certeza que deseja sair do sistema?')) {
+                localStorage.removeItem("usuario");
+                window.location.href = "../login";
+            }
+        }

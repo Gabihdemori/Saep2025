@@ -9,7 +9,7 @@
   "keywords": [],
   "author": "Gabriela Helena",
   "license": "ISC",
-  "description": "SAEB Prático - Sistema de Controle de Estoque para Ferramentas e Equipamentos Manuais",
+  "description": "SAEP Prático - Sistema de Controle de Estoque para Ferramentas e Equipamentos Manuais",
   "prisma":{
     "seed": "node prisma/seed.js"
   },

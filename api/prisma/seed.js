@@ -40,7 +40,7 @@ async function main() {
       descricao: "Alicate universal 200mm"
     }
   ],
-  skipDuplicates: false // ou true, se quiser evitar duplicatas
+  skipDuplicates: false 
 })
 
 

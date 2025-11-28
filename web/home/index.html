@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAEB - Sistema de Estoque</title>
+    <title>SAEP - Sistema de Estoque</title>
     <style>
         * {
             margin: 0;
@@ -237,7 +237,7 @@
         
         <main>
             <div class="page-header">
-                <h1 class="page-title">SAEB - Sistema de Estoque</h1>
+                <h1 class="page-title">SAEP - Sistema de Estoque</h1>
                 <p class="page-subtitle">Controle de ferramentas e equipamentos manuais</p>
             </div>
             
@@ -268,27 +268,10 @@
         </main>
         
         <footer>
-            <p class="footer-text">SAEB - Sistema de Controle de Estoque para Ferramentas e Equipamentos Manuais</p>
+            <p class="footer-text">SAEP - Sistema de Controle de Estoque para Ferramentas e Equipamentos Manuais</p>
         </footer>
     </div>
 
-    <script>
-        // Carregar informações do usuário
-        document.addEventListener('DOMContentLoaded', function() {
-            const usuario = JSON.parse(localStorage.getItem("usuario")) || { nome: "Usuário" };
-            
-            // Atualizar informações do usuário na interface
-            document.getElementById('user-name').textContent = usuario.nome;
-            document.getElementById('user-avatar').textContent = usuario.nome.charAt(0).toUpperCase();
-        });
-
-        // Função para sair do sistema
-        function sair() {
-            if (confirm('Tem certeza que deseja sair do sistema?')) {
-                localStorage.removeItem("usuario");
-                window.location.href = "../login";
-            }
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>

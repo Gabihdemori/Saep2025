@@ -8,11 +8,11 @@ Os testes de integração banco de dados e backend foram realizados utilizando a
     - [x] Solicitar email e senha
     - [x] Validar as credenciais do usuário
     - [x] Redirecionar para a interface principal do sistema
-![Screenshot 1]([./Tela login.png](https://github.com/Gabihdemori/Saep2025/blob/3843b1c84d9955ba966e414161610fe8c6431c1c/docs/Tela%20login.png))
+![Tela login]((https://github.com/Gabihdemori/Saep2025/blob/3843b1c84d9955ba966e414161610fe8c6431c1c/docs/Tela%20login.png))
 - [x] Interface principal do sistema
     - [x] Exibir menu de navegação com as opções de Produtos e Estoque
     - [x] Criar um botão a funcionalidade de sair do sistema
-![Screenshot 2](./screenshot02.png)
+![Home](https://github.com/Gabihdemori/Saep2025/blob/3843b1c84d9955ba966e414161610fe8c6431c1c/docs/Home.png)
 - [x] Gerenciamento de Produtos
     - [x] Exibir lista de produtos cadastrados
     - [x] Permitir adicionar novos produtos com **nome**, **descrição** e **quantidade** em estoque, **estoque mínimo** e **custo unitário de produção**
