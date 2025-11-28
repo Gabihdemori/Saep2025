@@ -594,12 +594,11 @@
                 const vendaData = {
                     quantidade: tipo === 'entrada' ? quantidade : -quantidade,
                     data_venda: new Date(data).toISOString(),
-                    valor_total: 0, // Pode ser calculado se necessário
-                    id_usuario: 1, // ID do usuário logado
+                    valor_total: 0, 
+                    id_usuario: 1, 
                     observacao: observacao || `Movimentação de ${tipo}`
                 };
 
-                // Adicionar referência ao produto conforme modelo Prisma
                 if (produto.tipo === 'ferramenta') {
                     vendaData.id_ferramenta = produtoId;
                 } else {
@@ -618,7 +617,6 @@
                     throw new Error('Erro ao registrar venda');
                 }
 
-                // Atualizar estoque localmente
                 if (tipo === 'entrada') {
                     estoqueInfo.estoque += quantidade;
                 } else {
@@ -642,7 +640,6 @@
             }
         }
 
-        // Validar movimentação
         function validarMovimentacao() {
             const produto = document.getElementById('produto').value;
             const quantidade = document.getElementById('quantidade').value;
