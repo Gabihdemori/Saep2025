@@ -1,0 +1,22 @@
+{
+  "name": "apijustintime",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "dev": "npx nodemon server.js",
+    "postinstall": "prisma migrate dev --name init && prisma generate"
+  },
+  "keywords": [],
+  "author": "Gabriela Helena",
+  "license": "ISC",
+  "description": "SAEB Prático - Sistema de Controle de Estoque para Ferramentas e Equipamentos Manuais",
+  "prisma":{
+    "seed": "node prisma/seed.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0"
+  }
+}

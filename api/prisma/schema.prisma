@@ -1,0 +1,56 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Usuario {
+  id_usuario Int     @id @default(autoincrement())
+  nome       String
+  email      String   @unique
+  senha      String
+
+  vendas     Venda[]
+}
+
+
+model Equipamento_Manual {
+  id_equipamento Int    @id @default(autoincrement())
+  nome           String
+  marca          String
+  modelo         String
+
+  vendas         Venda[]
+}
+
+
+model Ferramenta {
+  id_ferramenta Int    @id @default(autoincrement())
+  nome          String
+  marca         String
+  modelo        String
+  tipo          String
+  peso         String?
+  voltagem     String?
+  descricao     String?
+
+  vendas        Venda[]
+}
+
+model Venda {
+  id_venda       Int     @id @default(autoincrement())
+  quantidade     Int
+  data_venda     DateTime @default(now())
+  valor_total    Float
+
+  id_usuario     Int
+  id_ferramenta  Int?
+  id_equipamento Int?
+
+  usuario        Usuario           @relation(fields: [id_usuario], references: [id_usuario])
+  ferramenta     Ferramenta?       @relation(fields: [id_ferramenta], references: [id_ferramenta])
+  equipamento    Equipamento_Manual? @relation(fields: [id_equipamento], references: [id_equipamento])
+}

@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAEB - Gestão de Estoque</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: #f8fafc;
+            min-height: 100vh;
+            color: #334155;
+        }
+
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .back-btn {
+            padding: 8px 16px;
+            background: #f1f5f9;
+            color: #475569;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            background: #e2e8f0;
+        }
+
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        main {
+            flex: 1;
+            padding: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .movement-section {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .movement-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            align-items: end;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #374151;
+            font-size: 0.9rem;
+        }
+
+        .input-field, .select-field {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            background: #fff;
+        }
+
+        .input-field:focus, .select-field:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn-primary {
+            background: #1e40af;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1e3a8a;
+        }
+
+        .inventory-section {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        th {
+            background: #f8fafc;
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: #374151;
+            font-size: 0.85rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.9rem;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        .stock-warning {
+            background: #fef2f2;
+            color: #dc2626;
+            font-weight: 600;
+        }
+
+        .stock-ok {
+            color: #059669;
+        }
+
+        .movement-type {
+            display: flex;
+            gap: 12px;
+        }
+
+        .type-option {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .type-option.selected {
+            border-color: #1e40af;
+            background: #eff6ff;
+        }
+
+        .type-option.entrada.selected {
+            border-color: #059669;
+            background: #f0fdf4;
+        }
+
+        .type-option.saida.selected {
+            border-color: #dc2626;
+            background: #fef2f2;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #64748b;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 16px;
+            color: #cbd5e1;
+        }
+
+        .product-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .product-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            background: #eff6ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e40af;
+        }
+
+        .product-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-name {
+            font-weight: 500;
+            color: #1e293b;
+        }
+
+        .product-specs {
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        @media (max-width: 768px) {
+            main {
+                padding: 16px;
+            }
+            
+            header {
+                padding: 12px 16px;
+            }
+            
+            .movement-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .movement-type {
+                flex-direction: column;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <header>
+            <div class="header-content">
+                <a href="../home/index.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Voltar
+                </a>
+                <h1 class="page-title">Gestão de Estoque</h1>
+            </div>
+        </header>
+        
+        <main>
+            <!-- Seção de Movimentação -->
+            <section class="movement-section">
+                <h2 class="section-title">Movimentação de Estoque</h2>
+                
+                <form id="movementForm" class="movement-form">
+                    <div class="form-group">
+                        <label for="produto">Produto *</label>
+                        <select id="produto" class="select-field" required>
+                            <option value="">Selecione um produto</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Tipo de Movimentação *</label>
+                        <div class="movement-type">
+                            <div class="type-option entrada selected" data-type="entrada">
+                                <i class="fas fa-arrow-down"></i>
+                                <div>Entrada</div>
+                            </div>
+                            <div class="type-option saida" data-type="saida">
+                                <i class="fas fa-arrow-up"></i>
+                                <div>Saída</div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="tipoMovimentacao" value="entrada" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="data">Data *</label>
+                        <input type="date" id="data" class="input-field" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="quantidade">Quantidade *</label>
+                        <input type="number" id="quantidade" class="input-field" min="1" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="observacao">Observação</label>
+                        <input type="text" id="observacao" class="input-field" placeholder="Motivo da movimentação">
+                    </div>
+                    
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" id="submitBtn">
+                            <i class="fas fa-save"></i> Registrar Movimentação
+                        </button>
+                    </div>
+                </form>
+            </section>
+            
+            <!-- Seção de Inventário -->
+            <section class="inventory-section">
+                <h2 class="section-title">Inventário de Produtos</h2>
+                
+                <div class="table-container">
+                    <table id="inventoryTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Produto</th>
+                                <th>Tipo</th>
+                                <th>Marca/Modelo</th>
+                                <th>Especificações</th>
+                                <th>Estoque Atual</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventoryTableBody">
+                            <tr>
+                                <td colspan="7" class="empty-state">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                    <div>Carregando produtos...</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Variáveis globais
+        const api = "http://localhost:3000/ferramentas";
+        
+        let produtos = [];
+        let estoqueData = {};
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            carregarProdutos();
+            configurarEventos();
+            document.getElementById('data').value = new Date().toISOString().split('T')[0];
+        });
+
+        // Configurar eventos
+        function configurarEventos() {
+            // Tipo de movimentação
+            document.querySelectorAll('.type-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.type-option').forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    document.getElementById('tipoMovimentacao').value = this.dataset.type;
+                });
+            });
+
+            // Formulário de movimentação
+            document.getElementById('movementForm').addEventListener('submit', registrarMovimentacao);
+        }
+
+        // Carregar produtos do backend
+        async function carregarProdutos() {
+            try {
+                const [ferramentasResponse, equipamentosResponse, vendasResponse] = await Promise.all([
+                    fetch(`${api}/ferramentas`),
+                    fetch(`${api}/equipamentos`),
+                    fetch(`${api}/vendas`)
+                ]);
+
+                if (!ferramentasResponse.ok || !equipamentosResponse.ok || !vendasResponse.ok) {
+                    throw new Error('Erro ao carregar dados do servidor');
+                }
+
+                const ferramentas = await ferramentasResponse.json();
+                const equipamentos = await equipamentosResponse.json();
+                const vendas = await vendasResponse.json();
+
+                // Processar produtos de acordo com os modelos Prisma
+                produtos = [
+                    ...ferramentas.map(f => ({
+                        ...f,
+                        tipo: 'ferramenta',
+                        id: f.id_ferramenta,
+                        tipo_produto: f.tipo,
+                        especificacoes: `${f.peso ? `Peso: ${f.peso} | ` : ''}${f.voltagem ? `Voltagem: ${f.voltagem}` : ''}`
+                    })),
+                    ...equipamentos.map(e => ({
+                        ...e,
+                        tipo: 'equipamento',
+                        id: e.id_equipamento,
+                        especificacoes: 'Equipamento Manual'
+                    }))
+                ];
+
+                // Calcular estoque a partir das vendas
+                calcularEstoque(vendas);
+
+                // Ordenação alfabética usando Bubble Sort
+                ordenarProdutos();
+                atualizarSelectProdutos();
+                atualizarTabelaInventario();
+
+            } catch (error) {
+                console.error('Erro ao carregar produtos:', error);
+                mostrarErro('Erro ao carregar produtos do servidor');
+            }
+        }
+
+        // Calcular estoque a partir das vendas
+        function calcularEstoque(vendas) {
+            // Inicializar estoque
+            produtos.forEach(produto => {
+                estoqueData[produto.id] = {
+                    estoque: 0,
+                    estoque_minimo: produto.tipo === 'ferramenta' ? 5 : 2 // Diferentes mínimos por tipo
+                };
+            });
+
+            // Processar vendas para calcular estoque (saídas)
+            vendas.forEach(venda => {
+                if (venda.id_ferramenta) {
+                    estoqueData[venda.id_ferramenta].estoque -= venda.quantidade;
+                }
+                if (venda.id_equipamento) {
+                    estoqueData[venda.id_equipamento].estoque -= venda.quantidade;
+                }
+            });
+
+            // Adicionar estoque inicial (simulação - em produção viria do banco)
+            produtos.forEach(produto => {
+                if (estoqueData[produto.id].estoque <= 0) {
+                    estoqueData[produto.id].estoque = Math.floor(Math.random() * 50) + 10;
+                }
+            });
+        }
+
+        // Algoritmo de ordenação (Bubble Sort)
+        function ordenarProdutos() {
+            let n = produtos.length;
+            for (let i = 0; i < n - 1; i++) {
+                for (let j = 0; j < n - i - 1; j++) {
+                    if (produtos[j].nome.toLowerCase() > produtos[j + 1].nome.toLowerCase()) {
+                        // Troca os elementos
+                        let temp = produtos[j];
+                        produtos[j] = produtos[j + 1];
+                        produtos[j + 1] = temp;
+                    }
+                }
+            }
+        }
+
+        // Atualizar select de produtos
+        function atualizarSelectProdutos() {
+            const select = document.getElementById('produto');
+            select.innerHTML = '<option value="">Selecione um produto</option>';
+            
+            produtos.forEach(produto => {
+                const estoqueInfo = estoqueData[produto.id];
+                const option = document.createElement('option');
+                option.value = produto.id;
+                option.textContent = `${produto.nome} - ${produto.marca} ${produto.modelo} (Estoque: ${estoqueInfo.estoque})`;
+                option.dataset.estoqueMinimo = estoqueInfo.estoque_minimo;
+                option.dataset.estoqueAtual = estoqueInfo.estoque;
+                option.dataset.tipo = produto.tipo;
+                select.appendChild(option);
+            });
+        }
+
+        // Atualizar tabela de inventário
+        function atualizarTabelaInventario() {
+            const tbody = document.getElementById('inventoryTableBody');
+            tbody.innerHTML = '';
+
+            if (produtos.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="empty-state">
+                            <i class="fas fa-box-open"></i>
+                            <div>Nenhum produto cadastrado</div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            produtos.forEach(produto => {
+                const estoqueInfo = estoqueData[produto.id];
+                const status = estoqueInfo.estoque <= estoqueInfo.estoque_minimo ? 'stock-warning' : 'stock-ok';
+                const statusText = estoqueInfo.estoque <= estoqueInfo.estoque_minimo ? 
+                    `⚠️ Estoque Baixo (Mín: ${estoqueInfo.estoque_minimo})` : 
+                    `✓ Estoque OK (Mín: ${estoqueInfo.estoque_minimo})`;
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${produto.id}</td>
+                    <td>
+                        <div class="product-info">
+                            <div class="product-icon">
+                                <i class="fas fa-${produto.tipo === 'ferramenta' ? 'tools' : 'cogs'}"></i>
+                            </div>
+                            <div class="product-details">
+                                <div class="product-name">${produto.nome}</div>
+                                <div class="product-specs">${produto.tipo_produto || 'Equipamento'}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>${produto.tipo === 'ferramenta' ? 'Ferramenta' : 'Equipamento'}</td>
+                    <td>${produto.marca} ${produto.modelo}</td>
+                    <td>${produto.especificacoes || '-'}</td>
+                    <td>${estoqueInfo.estoque}</td>
+                    <td class="${status}">${statusText}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Registrar movimentação
+        async function registrarMovimentacao(e) {
+            e.preventDefault();
+
+            if (!validarMovimentacao()) {
+                return;
+            }
+
+            const produtoId = parseInt(document.getElementById('produto').value);
+            const tipo = document.getElementById('tipoMovimentacao').value;
+            const data = document.getElementById('data').value;
+            const quantidade = parseInt(document.getElementById('quantidade').value);
+            const observacao = document.getElementById('observacao').value;
+
+            const produto = produtos.find(p => p.id === produtoId);
+            if (!produto) return;
+
+            const estoqueInfo = estoqueData[produtoId];
+
+            // Verificar estoque para saída
+            if (tipo === 'saida') {
+                if (estoqueInfo.estoque < quantidade) {
+                    alert('Quantidade insuficiente em estoque!');
+                    return;
+                }
+
+                // Verificar estoque mínimo
+                const novoEstoque = estoqueInfo.estoque - quantidade;
+                if (novoEstoque <= estoqueInfo.estoque_minimo) {
+                    const confirmar = confirm(`⚠️ ATENÇÃO: Após esta movimentação, o estoque ficará abaixo do mínimo!\n\nEstoque atual: ${estoqueInfo.estoque}\nEstoque mínimo: ${estoqueInfo.estoque_minimo}\nEstoque após movimentação: ${novoEstoque}\n\nDeseja continuar?`);
+                    if (!confirmar) {
+                        return;
+                    }
+                }
+            }
+
+            try {
+                // Criar venda no backend
+                const vendaData = {
+                    quantidade: tipo === 'entrada' ? quantidade : -quantidade,
+                    data_venda: new Date(data).toISOString(),
+                    valor_total: 0, // Pode ser calculado se necessário
+                    id_usuario: 1, // ID do usuário logado
+                    observacao: observacao || `Movimentação de ${tipo}`
+                };
+
+                // Adicionar referência ao produto conforme modelo Prisma
+                if (produto.tipo === 'ferramenta') {
+                    vendaData.id_ferramenta = produtoId;
+                } else {
+                    vendaData.id_equipamento = produtoId;
+                }
+
+                const response = await fetch(`${api}/vendas`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(vendaData)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erro ao registrar venda');
+                }
+
+                // Atualizar estoque localmente
+                if (tipo === 'entrada') {
+                    estoqueInfo.estoque += quantidade;
+                } else {
+                    estoqueInfo.estoque -= quantidade;
+                }
+
+                ordenarProdutos();
+                atualizarSelectProdutos();
+                atualizarTabelaInventario();
+                
+                document.getElementById('movementForm').reset();
+                document.getElementById('data').value = new Date().toISOString().split('T')[0];
+                document.querySelectorAll('.type-option').forEach(opt => opt.classList.remove('selected'));
+                document.querySelector('.type-option.entrada').classList.add('selected');
+                document.getElementById('tipoMovimentacao').value = 'entrada';
+
+                alert('Movimentação registrada com sucesso!');
+            } catch (error) {
+                console.error('Erro ao registrar movimentação:', error);
+                alert('Erro ao registrar movimentação: ' + error.message);
+            }
+        }
+
+        // Validar movimentação
+        function validarMovimentacao() {
+            const produto = document.getElementById('produto').value;
+            const quantidade = document.getElementById('quantidade').value;
+            const data = document.getElementById('data').value;
+
+            if (!produto || !quantidade || !data) {
+                alert('Por favor, preencha todos os campos obrigatórios');
+                return false;
+            }
+
+            if (parseInt(quantidade) <= 0) {
+                alert('A quantidade deve ser maior que zero');
+                return false;
+            }
+
+            return true;
+        }
+
+        function mostrarErro(mensagem) {
+            const tbody = document.getElementById('inventoryTableBody');
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="7" class="empty-state">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div>${mensagem}</div>
+                    </td>
+                </tr>
+            `;
+        }
+    </script>
+</body>
+</html>
