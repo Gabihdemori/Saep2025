@@ -42,18 +42,17 @@ npm start
 ### [Lista de Requisitos Funcionais](./docs/Requisitos_funcionais.md)
 ---
 ### Diagrama entidade relacionamento DER
-![Diagrama.drawio]([./docs/der.png](https://github.com/Gabihdemori/Saep2025/blob/b5ec90b2cd84e11b2966e1e133282daa92d9185f/docs/Diagrama.drawio.png))
+
 ### Script de criação e população do banco de dados
-  - [Script de Criaçã - prisma/schema.prisma](./api/prisma/schema.prisma)
-  - [Script de população - prisma/seed.js](./api/prisma/seed.js)
+
 ---
-### [Interface de autenticação de usuários (login)](./docs/Tela login.png)
+### Interface de autenticação de usuários
 ---
-### [Interface principal do sistema](./docs/screenshot02.png)
+### Interface principal do sistema
 ---
-### [Interface cadastro de produtos](./docs/screenshot03.png) - [Excluir Produto](./docs/screenshot04.png)
+### Interface cadastro de produtos
 ---
-### [Interface gestão de produção](./docs/screenshot05.png) [(Just in time)](./docs/screenshot06.png)
+### Interface gestão de produção
 ---
-### [Descritivo de Casos de Teste de Software](./docs/casos_de_teste.md)
+### Descritivo de Casos de Teste de Software
 ---
