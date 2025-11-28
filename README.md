@@ -47,7 +47,7 @@ npm start
   - [Script de Criaçã - prisma/schema.prisma](./api/prisma/schema.prisma)
   - [Script de população - prisma/seed.js](./api/prisma/seed.js)
 ---
-### [Interface de autenticação de usuários (login)](./docs/screenshot01.png)
+### [Interface de autenticação de usuários (login)](./docs/Tela login.png)
 ---
 ### [Interface principal do sistema](./docs/screenshot02.png)
 ---
