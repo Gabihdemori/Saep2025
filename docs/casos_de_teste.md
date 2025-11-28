@@ -8,9 +8,9 @@ Os testes de integração banco de dados e backend foram realizados utilizando a
     - [x] Solicitar email e senha
     - [x] Validar as credenciais do usuário
     - [x] Redirecionar para a interface principal do sistema
-![Screenshot 1](./screenshot01.png)
+![Screenshot 1](./Tela login.png)
 - [x] Interface principal do sistema
-    - [x] Exibir menu de navegação com as opções de Produtos e Produção
+    - [x] Exibir menu de navegação com as opções de Produtos e Estoque
     - [x] Criar um botão a funcionalidade de sair do sistema
 ![Screenshot 2](./screenshot02.png)
 - [x] Gerenciamento de Produtos
@@ -30,5 +30,3 @@ Os testes de integração banco de dados e backend foram realizados utilizando a
 ![Screenshot 5](./screenshot05.png)
 ![Screenshot 6](./screenshot06.png)
 
-## Resumo
-Os screenshots acima ilustram as principais evidências de que as funcionalidades do sistema foram implementadas conforme os requisitos funcionais especificados. A interface de autenticação permite o login seguro dos usuários, enquanto a interface principal oferece navegação intuitiva entre as seções de produtos e produção. O gerenciamento de produtos inclui funcionalidades completas para adicionar, editar, excluir e buscar produtos, garantindo uma gestão eficiente do estoque. O gerenciamento de produção facilita o registro de ordens de produção e pedidos concluídos, com alertas para produtos abaixo do estoque mínimo e verificações de disponibilidade de estoque. Essas funcionalidades combinadas garantem que o sistema atenda às necessidades operacionais de forma eficaz.
