@@ -42,7 +42,7 @@ npm start
 ### [Lista de Requisitos Funcionais](./docs/Requisitos_funcionais.md)
 ---
 ### Diagrama entidade relacionamento DER
-![MER x DER](./docs/der.png)
+![Diagrama.drawio]([./docs/der.png](https://github.com/Gabihdemori/Saep2025/blob/b5ec90b2cd84e11b2966e1e133282daa92d9185f/docs/Diagrama.drawio.png))
 ### Script de criação e população do banco de dados
   - [Script de Criaçã - prisma/schema.prisma](./api/prisma/schema.prisma)
   - [Script de população - prisma/seed.js](./api/prisma/seed.js)
